@@ -1,0 +1,21 @@
+/* Estilos específicos para o footer */
+.contact-info {
+    margin-bottom: 1rem;
+}
+
+.contact-info li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.contact-phone {
+    white-space: nowrap;
+}
+
+/* Garantir visibilidade em dispositivos móveis */
+@media (max-width: 768px) {
+    .contact-info li {
+        justify-content: center;
+    }
+}

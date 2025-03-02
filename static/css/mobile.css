@@ -40,6 +40,20 @@
     /* Ajusta footer para mobile */
     footer {
         text-align: center;
+        font-size: 0.95rem; /* Tamanho de fonte ligeiramente menor */
+    }
+    
+    /* Garantir que as informações de contato sejam visíveis */
+    footer .list-unstyled li {
+        margin-bottom: 0.75rem;
+        display: block;
+        width: 100%;
+    }
+    
+    /* Aumentar contraste e visibilidade dos ícones no footer */
+    footer .fas, footer .fab {
+        font-size: 1.1rem;
+        margin-right: 8px;
     }
 
     /* Ajusta ícones para tamanho de toque */
