@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - Sistema de Cálculo de Notas{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col">
+            <h2><i class="fas fa-tachometer-alt me-2"></i>Dashboard</h2>
+            <p class="text-muted">Bem-vindo, {{ request.user.username }}!</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-calculator me-2 text-primary"></i>Calcular Notas</h5>
+                    <p class="card-text">Calcule suas médias e acompanhe seu desempenho.</p>
+                    <a href="{% url 'calcular_notas' %}" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Nova Calculadora
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-history me-2 text-primary"></i>Histórico</h5>
+                    <p class="card-text">Visualize seus cálculos anteriores.</p>
+                    <a href="#" class="btn btn-primary">
+                        <i class="fas fa-clock me-2"></i>Ver Histórico
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

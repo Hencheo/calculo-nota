@@ -1,0 +1,55 @@
+/* Estilos personalizados */
+.badge {
+    font-size: 0.9em;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+}
+
+.btn-group .btn {
+    margin-right: 5px;
+}
+
+.btn-group .btn:last-child {
+    margin-right: 0;
+}
+
+/* Estilos para posicionar o footer */
+html, body {
+    min-height: 100vh;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.container.mt-4 {
+    flex: 1;
+}
+
+footer {
+    margin-top: auto;
+}
+
+/* Estilos do Footer */
+footer .social-links a {
+    transition: opacity 0.3s ease;
+}
+
+footer .social-links a:hover {
+    opacity: 0.8;
+}
+
+footer .list-unstyled a {
+    transition: color 0.3s ease;
+}
+
+footer .list-unstyled a:hover {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+footer .btn-outline-light:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}

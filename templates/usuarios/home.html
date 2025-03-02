@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Início - Sistema de Cálculo de Notas{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<style>
+    .container.py-5 {
+        min-height: 70vh;
+    }
+    
+    .card-body {
+        transform: scale(0.9);
+    }
+    
+    .dev-section {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        padding: 2.5rem;
+        margin-top: 8rem; /* Aumentado de 4rem para 8rem */
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .dev-section:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+    }
+    
+    .dev-icon {
+        font-size: 2.5rem;
+        color: #0d6efd;
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center align-items-stretch g-4">
+        <div class="col-md-6">
+            <a href="{% url 'calcular_notas' %}" class="text-decoration-none text-dark">
+                <div class="card h-100 card-hover neon-card">
+                    <div class="card-body text-center p-5">
+                        <i class="fas fa-calculator card-icon"></i>
+                        <h3 class="card-title mb-4">Calcular Média</h3>
+                        <p class="card-text">
+                            Calcule sua média semestral instantaneamente! Insira suas notas de prova, 
+                            PIM e AVA para saber sua situação acadêmica.
+                        </p>
+                        <div class="mt-4">
+                            <button class="btn btn-primary btn-lg">
+                                <i class="fas fa-arrow-right me-2"></i>Calcular Agora
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card h-100 card-hover neon-card">
+                <div class="card-body text-center p-5">
+                    <i class="fas fa-chart-line card-icon"></i>
+                    <h3 class="card-title mb-4">Acompanhamento Semestral</h3>
+                    <p class="card-text">
+                        Crie uma conta e tenha acesso a recursos exclusivos para 
+                        acompanhar seu desempenho acadêmico.
+                    </p>
+                    <div class="hidden-content">
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-save text-primary me-2"></i>
+                                    <span>Armazene suas notas</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-chart-bar text-primary me-2"></i>
+                                    <span>Identifique pontos fortes</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-tasks text-primary me-2"></i>
+                                    <span>Salve andamento de projetos</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-lightbulb text-primary me-2"></i>
+                                    <span>Visualize estatísticas</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <a href="{% url 'registro' %}" class="btn btn-outline-primary btn-lg">
+                                <i class="fas fa-user-plus me-2"></i>Criar Conta
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Nova seção de desenvolvimento web -->
+    <div class="dev-section text-center">
+        <i class="fas fa-laptop-code dev-icon"></i>
+        <h3 class="mb-3">Transforme suas ideias em soluções digitais</h3>
+        <p class="lead mb-4">Imagine ter uma ferramenta personalizada que resolva exatamente o problema do seu negócio ou estudos, assim como este calculador de notas simplifica a vida acadêmica.</p>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <p class="mb-4">Todos os dias, pessoas e empresas perdem tempo com processos manuais que poderiam ser automatizados. Um sistema web personalizado pode economizar horas do seu dia e potencializar seus resultados.</p>
+                <a href="https://wa.me/5517992717889" target="_blank" class="btn btn-outline-primary">
+                    <i class="fab fa-whatsapp me-2"></i>Converse sobre seu projeto
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Adiciona efeito de hover nos cards
+        const cards = document.querySelectorAll('.card-hover');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.classList.add('card-active');
+            });
+            card.addEventListener('mouseleave', function() {
+                this.classList.remove('card-active');
+            });
+        });
+    });
+</script>
+{% endblock %}

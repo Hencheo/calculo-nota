@@ -1,0 +1,140 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0d6efd">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>{% block title %}Sistema de Cálculo de Notas{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <i class="fas fa-calculator me-2"></i>Cálculo de Notas
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'como_funciona' %}">
+                            <i class="fas fa-info-circle me-1"></i>Como Funciona
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'blog' %}">
+                            <i class="fas fa-blog me-1"></i>Blog
+                        </a>
+                    </li>
+                    <!-- Add this new item -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'calcular_notas' %}">
+                            <i class="fas fa-calculator me-1"></i>Calcular Notas
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'dashboard' %}">
+                                <i class="fas fa-tachometer-alt me-1"></i>Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-user me-1"></i>{{ user.first_name|default:user.username }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="{% url 'logout' %}">Sair</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">
+                                <i class="fas fa-sign-in-alt me-1"></i>Entrar
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'registro' %}">
+                                <i class="fas fa-user-plus me-1"></i>Cadastrar
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer class="bg-primary text-white py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3 border-bottom pb-2">Sobre o Projeto</h5>
+                    <p>O Sistema de Cálculo de Notas foi desenvolvido para ajudar estudantes a gerenciar suas notas e acompanhar seu desempenho acadêmico de forma simples e eficiente.</p>
+                    <div class="mt-3">
+                        <a href="https://linkedin.com" class="text-white me-3 fs-4" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://instagram.com" class="text-white me-3 fs-4" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://github.com" class="text-white fs-4" target="_blank"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3 border-bottom pb-2">Links Úteis</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="{% url 'home' %}" class="text-white text-decoration-none"><i class="fas fa-home me-2"></i>Página Inicial</a></li>
+                        <li class="mb-2"><a href="{% url 'como_funciona' %}" class="text-white text-decoration-none"><i class="fas fa-info-circle me-2"></i>Como Funciona</a></li>
+                        <li class="mb-2"><a href="{% url 'blog' %}" class="text-white text-decoration-none"><i class="fas fa-blog me-2"></i>Blog</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none"><i class="fas fa-question-circle me-2"></i>Sobre o Projeto</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-4">
+                    <h5 class="mb-3 border-bottom pb-2">Contato</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i>hencheo96@gmail.com</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i>(17) 9 9271-7889</li>
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i>São José do Rio Preto, SP</li>
+                    </ul>
+                    <div class="mt-3">
+                        <a href="#" class="btn btn-outline-light btn-sm">
+                            <i class="fas fa-paper-plane me-2"></i>Enviar Mensagem
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4 pt-3 border-top">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">Sistema de Cálculo de Notas &copy; {% now "Y" %}</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0">Desenvolvido por Hencheo</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
