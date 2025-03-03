@@ -58,7 +58,7 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
-                                    <form method="post" action="{% url 'logout' %}" class="dropdown-item p-0">
+                                    <form method="post" action="{% url 'logout' %}" style="margin: 0;">
                                         {% csrf_token %}
                                         <button type="submit" class="dropdown-item">
                                             <i class="fas fa-sign-out-alt me-2"></i>Sair
