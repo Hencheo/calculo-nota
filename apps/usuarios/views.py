@@ -18,13 +18,23 @@ def calcular_notas(request):
 
 @login_required
 def calcular_notas(request):
+    """
+    Renderiza a página de cálculo de notas
+    """
     return render(request, 'usuarios/calcular_notas.html')
 
 def home(request):
+    """
+    Renderiza a página inicial
+    """
     return render(request, 'usuarios/home.html')
 
 @login_required
 def dashboard(request):
+    """
+    Renderiza a página de dashboard do usuário
+    Requer que o usuário esteja autenticado
+    """
     return render(request, 'usuarios/dashboard.html')
 
 # Adicione esta função para registro baseado em função
