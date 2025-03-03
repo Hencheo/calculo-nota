@@ -107,6 +107,6 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 # Configurações de autenticação
-LOGIN_URL = '/accounts/login/'  # Adicione a barra no início
+LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = 'dashboard'
-LOGOUT_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'  # Certifique-se de que isso está definido corretamente

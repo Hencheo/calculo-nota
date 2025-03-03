@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from django.contrib.auth import views as auth_views
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -12,4 +12,7 @@ urlpatterns = [
     path('como-funciona/', views.como_funciona, name='como_funciona'),
     path('blog/', views.blog, name='blog'),
     path('contato/', views.contato, name='contato'),
+    path('logout/', views.logout_view, name='logout'),  # Use a função baseada em view
+    # OU use a classe do Django com next_page definido
+    # path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
 ]

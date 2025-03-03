@@ -87,6 +87,9 @@ class LogoutUsuarioView(LogoutView):
 
 # Substitua a classe LogoutUsuarioView por uma função baseada em view
 def logout_view(request):
+    """
+    Função para logout de usuários
+    """
     logout(request)
     messages.success(request, 'Você saiu do sistema com sucesso!')
     return redirect('home')  # Redireciona para a página inicial após logout
