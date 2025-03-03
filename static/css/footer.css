@@ -5,17 +5,37 @@
 
 .contact-info li {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 0.5rem;
+    text-align: left;
 }
 
 .contact-phone {
     white-space: nowrap;
 }
 
-/* Garantir visibilidade em dispositivos móveis */
+/* Garantir alinhamento à esquerda em dispositivos móveis */
 @media (max-width: 768px) {
     .contact-info li {
-        justify-content: center;
+        justify-content: flex-start;
+        text-align: left;
+    }
+    
+    .col-md-4 {
+        text-align: left !important;
+    }
+    
+    footer .col-md-4 h5,
+    footer .col-md-4 p,
+    footer .col-md-4 ul,
+    footer .col-md-4 li,
+    footer .col-md-4 a,
+    footer .col-md-4 div {
+        text-align: left !important;
+    }
+    
+    footer .btn {
+        margin-left: 0;
+        text-align: left;
     }
 }
