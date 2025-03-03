@@ -78,7 +78,7 @@ class LoginUsuarioView(LoginView):
         messages.success(self.request, f'Bem-vindo, {form.get_user().first_name}!')
         return super().form_valid(form)
 
-class from django.urls import path
+from django.urls import path
 from . import views
 from django.contrib.auth.views import LogoutView
 
@@ -93,7 +93,8 @@ urlpatterns = [
     path('como-funciona/', views.como_funciona, name='como_funciona'),
     path('blog/', views.blog, name='blog'),
     path('contato/', views.contato, name='contato'),
-]UsuarioView(LogoutView):
+]
+class LogoutUsuarioView(LogoutView):
     next_page = reverse_lazy('login')
     
     def dispatch(self, request, *args, **kwargs):
