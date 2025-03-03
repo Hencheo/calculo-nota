@@ -121,10 +121,10 @@
                         <!-- EAD fields -->
                         <div class="col-md-4 ead-field">
                             <div class="form-group">
-                                <label for="np1" class="form-label">
+                                <label for="nota_prova" class="form-label">
                                     <i class="fas fa-file-alt me-2"></i>Nota da Prova
                                 </label>
-                                <input type="number" class="form-control" id="np1" step="0.1" min="0" max="10" required>
+                                <input type="number" class="form-control" id="nota_prova" step="0.1" min="0" max="10" required>
                                 <small class="text-light">Peso: 70%</small>
                             </div>
                         </div>
@@ -132,19 +132,19 @@
                         <!-- PRESENCIAL fields -->
                         <div class="col-md-3 presencial-field" style="display: none;">
                             <div class="form-group">
-                                <label for="np1" class="form-label">
+                                <label for="nota_np1" class="form-label">
                                     <i class="fas fa-file-alt me-2"></i>Nota NP1
                                 </label>
-                                <input type="number" class="form-control" id="np1" step="0.1" min="0" max="10" required>
+                                <input type="number" class="form-control" id="nota_np1" step="0.1" min="0" max="10" required>
                                 <small class="text-light">Primeira prova</small>
                             </div>
                         </div>
                         <div class="col-md-3 presencial-field" style="display: none;">
                             <div class="form-group">
-                                <label for="np2" class="form-label">
+                                <label for="nota_np2" class="form-label">
                                     <i class="fas fa-file-alt me-2"></i>Nota NP2
                                 </label>
-                                <input type="number" class="form-control" id="np2" step="0.1" min="0" max="10" required>
+                                <input type="number" class="form-control" id="nota_np2" step="0.1" min="0" max="10" required>
                                 <small class="text-light">Segunda prova</small>
                             </div>
                         </div>
@@ -234,14 +234,35 @@
             const presencialFields = document.querySelectorAll('.presencial-field');
             
             if (currentModality === 'EAD') {
-                eadFields.forEach(field => field.style.display = 'block');
-                presencialFields.forEach(field => field.style.display = 'none');
+                // Mostrar campos EAD e esconder campos presenciais
+                eadFields.forEach(field => {
+                    field.style.display = 'block';
+                    // Habilitar campos required para EAD
+                    const inputs = field.querySelectorAll('input');
+                    inputs.forEach(input => input.required = true);
+                });
+                presencialFields.forEach(field => {
+                    field.style.display = 'none';
+                    // Desabilitar required para campos presenciais
+                    const inputs = field.querySelectorAll('input');
+                    inputs.forEach(input => input.required = false);
+                });
                 pimWeightEl.textContent = '20%';
                 avaWeightEl.textContent = '10%';
             } else {
-                eadFields.forEach(field => field.style.display = 'none');
-                presencialFields.forEach(field => field.style.display = 'block');
-                pimWeightEl.textContent = '20%';
+                // Mostrar campos presenciais e esconder campos EAD
+                eadFields.forEach(field => {
+                    field.style.display = 'none';
+                    // Desabilitar required para campos EAD
+                    const inputs = field.querySelectorAll('input');
+                    inputs.forEach(input => input.required = false);
+                });
+                presencialFields.forEach(field => {
+                    field.style.display = 'block';
+                    // Habilitar campos required para presencial
+                    const inputs = field.querySelectorAll('input');
+                    inputs.forEach(input => input.required = true);
+                });
                 pimWeightEl.textContent = '20%';
             }
         }
@@ -256,13 +277,13 @@
             let media;
             
             if (currentModality === 'EAD') {
-                const notaProva = parseFloat(document.getElementById('np1').value);
+                const notaProva = parseFloat(document.getElementById('nota_prova').value);
                 const ava = parseFloat(document.getElementById('ava').value);
                 // Fórmula EAD: (7 × Nota da Prova + 2 × PIM + 1 × AVA) ÷ 10
                 media = ((7 * notaProva) + (2 * pim) + (1 * ava)) / 10;
             } else {
-                const np1 = parseFloat(document.getElementById('np1').value);
-                const np2 = parseFloat(document.getElementById('np2').value);
+                const np1 = parseFloat(document.getElementById('nota_np1').value);
+                const np2 = parseFloat(document.getElementById('nota_np2').value);
                 // Fórmula Presencial: ((NP1 + NP2) × 0.8 + PIM × 0.2) ÷ 2
                 media = (((np1 + np2) * 0.8) + (pim * 0.2)) / 2;
             }
