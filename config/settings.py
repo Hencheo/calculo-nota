@@ -98,6 +98,10 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Adicionar configuração do Whitenoise para servir arquivos estáticos
+# Já existe na linha 28
+'whitenoise.middleware.WhiteNoiseMiddleware',
+
+# E está sendo adicionado novamente na linha 87
 MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
