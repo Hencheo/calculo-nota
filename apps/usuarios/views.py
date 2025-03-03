@@ -86,10 +86,22 @@ class LogoutUsuarioView(LogoutView):
         return super().dispatch(request, *args, **kwargs)
 
 # Substitua a classe LogoutUsuarioView por uma função baseada em view
+# Modifique esta função de logout
 def logout_view(request):
     """
-    Função para logout de usuários
+    Função para logout de usuários que não encerra o servidor
     """
+    # Importe o logout do Django
+    from django.contrib.auth import logout as auth_logout
+    
+    # Use o logout do Django
+    auth_logout(request)
+    
+    # Adicione uma mensagem de sucesso
+    messages.success(request, 'Você saiu do sistema com sucesso!')
+    
+    # Redirecione para a página inicial
+    return redirect('home')
     logout(request)
     messages.success(request, 'Você saiu do sistema com sucesso!')
     return redirect('home')  # Redireciona para a página inicial após logout
