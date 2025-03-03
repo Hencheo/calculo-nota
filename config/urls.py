@@ -7,7 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('apps.usuarios.urls')),
     path('notas/', include('apps.notas.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),  # Adicione esta linha
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
 
 if settings.DEBUG:
