@@ -1,0 +1,68 @@
+/* Estilos específicos para o footer */
+.contact-info {
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.contact-info li {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+    padding-left: 0;
+}
+
+.contact-phone {
+    white-space: nowrap;
+}
+
+/* Ajuste para dimensões específicas */
+@media (max-width: 400px) {
+    .contact-info {
+        padding: 0;
+        margin: 0;
+    }
+    
+    .contact-info li {
+        justify-content: flex-start;
+        margin-bottom: 1rem;
+    }
+    
+    footer .col-md-4 {
+        padding: 0 15px;
+        margin-bottom: 2rem;
+    }
+    
+    footer h5 {
+        margin-bottom: 1rem;
+    }
+    
+    footer .btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+/* Garantir alinhamento à esquerda em dispositivos móveis */
+@media (max-width: 768px) {
+    .contact-info li {
+        justify-content: flex-start;
+        text-align: left;
+    }
+    
+    .col-md-4 {
+        text-align: left !important;
+    }
+    
+    footer .col-md-4 h5,
+    footer .col-md-4 p,
+    footer .col-md-4 ul,
+    footer .col-md-4 li,
+    footer .col-md-4 a,
+    footer .col-md-4 div {
+        text-align: left !important;
+    }
+    
+    footer .btn {
+        margin-left: 0;
+        text-align: left;
+    }
+}

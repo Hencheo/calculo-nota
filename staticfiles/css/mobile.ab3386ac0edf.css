@@ -1,0 +1,83 @@
+/* Ajustes para telas pequenas */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    /* Ajusta cards para ocupar largura total */
+    .card {
+        margin-bottom: 1rem;
+    }
+
+    /* Ajusta tamanho dos botões para toque */
+    .btn {
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+    }
+
+    /* Ajusta tabelas para scroll horizontal */
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Ajusta formulários */
+    .form-control {
+        font-size: 16px; /* Previne zoom automático no iOS */
+        height: 45px; /* Altura maior para melhor toque */
+    }
+
+    /* Ajusta navbar para mobile */
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+
+    /* Melhora espaçamento do menu mobile */
+    .navbar-nav .nav-item {
+        padding: 0.5rem 0;
+    }
+
+    /* Ajusta footer para mobile */
+    footer {
+        text-align: center;
+        font-size: 0.95rem; /* Tamanho de fonte ligeiramente menor */
+    }
+    
+    /* Garantir que as informações de contato sejam visíveis */
+    footer .list-unstyled li {
+        margin-bottom: 0.75rem;
+        display: block;
+        width: 100%;
+    }
+    
+    /* Aumentar contraste e visibilidade dos ícones no footer */
+    footer .fas, footer .fab {
+        font-size: 1.1rem;
+        margin-right: 8px;
+    }
+
+    /* Ajusta ícones para tamanho de toque */
+    .fas, .fab {
+        font-size: 1.2rem;
+    }
+
+    /* Ajusta cards do dashboard */
+    .dashboard-card {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Melhorias de toque */
+@media (hover: none) {
+    /* Remove efeitos hover em dispositivos touch */
+    .card-hover:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    /* Aumenta área de toque */
+    .nav-link, .btn, .form-control {
+        min-height: 44px;
+        min-width: 44px;
+    }
+}

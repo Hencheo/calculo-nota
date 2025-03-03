@@ -7,9 +7,13 @@ from .models import Perfil
 def criar_perfil_usuario(sender, instance, created, **kwargs):
     """Cria um perfil para cada novo usuário criado"""
     if created:
-        Perfil.objects.create(usuario=instance)
+        # Verifica se já existe um perfil para este usuário
+        if not hasattr(instance, 'perfil'):
+            Perfil.objects.create(usuario=instance)
 
 @receiver(post_save, sender=User)
 def salvar_perfil_usuario(sender, instance, **kwargs):
     """Garante que o perfil seja salvo quando o usuário for atualizado"""
-    instance.perfil.save()
+    # Verifica se o usuário já tem um perfil antes de tentar salvar
+    if hasattr(instance, 'perfil'):
+        instance.perfil.save()

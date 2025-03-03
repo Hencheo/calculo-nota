@@ -16,6 +16,7 @@ class Perfil(models.Model):
         verbose_name = 'Perfil'
         verbose_name_plural = 'Perfis'
 
+# Removidos os receptores de sinais daqui, pois já estão em signals.py
 @receiver(post_save, sender=User)
 def criar_perfil_usuario(sender, instance, created, **kwargs):
     if created:
