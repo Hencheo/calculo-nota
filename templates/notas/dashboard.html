@@ -10,29 +10,100 @@
             <h2><i class="fas fa-tachometer-alt me-2"></i>Dashboard</h2>
             <p class="text-muted">Bem-vindo, {{ request.user.username }}!</p>
         </div>
+        <div class="col text-end">
+            <a href="{% url 'adicionar_disciplina' %}" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i>Nova Disciplina
+            </a>
+        </div>
     </div>
 
     <div class="row g-4">
-        <div class="col-md-6">
-            <div class="card h-100 shadow-sm">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
                 <div class="card-body">
-                    <h5 class="card-title"><i class="fas fa-calculator me-2 text-primary"></i>Calcular Notas</h5>
-                    <p class="card-text">Calcule suas médias e acompanhe seu desempenho.</p>
-                    <a href="{% url 'calcular_notas' %}" class="btn btn-primary">
-                        <i class="fas fa-plus me-2"></i>Nova Calculadora
-                    </a>
+                    <h5 class="card-title">Total de Disciplinas</h5>
+                    <h2>{{ total_disciplinas }}</h2>
                 </div>
             </div>
         </div>
-
-        <div class="col-md-6">
-            <div class="card h-100 shadow-sm">
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
                 <div class="card-body">
-                    <h5 class="card-title"><i class="fas fa-history me-2 text-primary"></i>Histórico</h5>
-                    <p class="card-text">Visualize seus cálculos anteriores.</p>
-                    <a href="#" class="btn btn-primary">
-                        <i class="fas fa-clock me-2"></i>Ver Histórico
-                    </a>
+                    <h5 class="card-title">Aprovadas</h5>
+                    <h2>{{ aprovadas }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-dark">
+                <div class="card-body">
+                    <h5 class="card-title">Em Exame</h5>
+                    <h2>{{ em_exame }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-danger text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Reprovadas</h5>
+                    <h2>{{ reprovadas }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Minhas Disciplinas</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Disciplina</th>
+                                    <th>Média</th>
+                                    <th>Situação</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for disciplina in disciplinas %}
+                                {% with media_info=disciplina.calcular_media_final %}
+                                <tr>
+                                    <td>{{ disciplina.nome }}</td>
+                                    <td>{{ media_info.0|default:'-'|floatformat:1 }}</td>
+                                    <td>
+                                        {% if media_info.1 == 'Aprovado' %}
+                                            <span class="badge bg-success">Aprovado</span>
+                                        {% elif media_info.1 == 'Exame necessário' %}
+                                            <span class="badge bg-warning text-dark">Exame Necessário</span>
+                                        {% elif media_info.1 == 'Reprovado' %}
+                                            <span class="badge bg-danger">Reprovado</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">{{ media_info.1 }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'editar_disciplina' disciplina.pk %}" class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="{% url 'excluir_disciplina' disciplina.pk %}" class="btn btn-sm btn-outline-danger">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endwith %}
+                                {% empty %}
+                                <tr>
+                                    <td colspan="4" class="text-center">Nenhuma disciplina cadastrada.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
