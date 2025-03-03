@@ -6,8 +6,14 @@ from django.dispatch import receiver
 # Utilizamos o modelo de usuário padrão do Django
 # Podemos estender com um perfil se necessário no futuro
 class Perfil(models.Model):
+    MODALIDADE_CHOICES = (
+        ('EAD', 'Ensino à Distância'),
+        ('PRESENCIAL', 'Ensino Presencial'),
+    )
+    
     usuario = models.OneToOneField(User, on_delete=models.CASCADE, related_name='perfil')
     data_nascimento = models.DateField('Data de Nascimento', null=True, blank=True)
+    modalidade = models.CharField('Modalidade de Ensino', max_length=10, choices=MODALIDADE_CHOICES, default='EAD')
     
     def __str__(self):
         return f'Perfil de {self.usuario.username}'

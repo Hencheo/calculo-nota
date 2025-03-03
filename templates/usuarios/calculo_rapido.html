@@ -70,6 +70,25 @@
         background: #0d6efd;
         color: #ffffff;
     }
+
+    .modality-selector {
+        background: rgba(255,255,255,0.1);
+        border-radius: 10px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .modality-btn {
+        background: rgba(255,255,255,0.2);
+        color: white;
+        border: 2px solid white;
+        transition: all 0.3s ease;
+    }
+
+    .modality-btn.active {
+        background: white;
+        color: #0d6efd;
+    }
 </style>
 {% endblock %}
 
@@ -84,34 +103,69 @@
                 <p class="text-center mb-4">
                     Calcule sua média instantaneamente! Não precisa de cadastro 🚀
                 </p>
+
+                <div class="modality-selector text-center">
+                    <h5 class="mb-3">Selecione sua Modalidade de Ensino</h5>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn modality-btn active" data-modality="EAD">
+                            <i class="fas fa-laptop me-2"></i>Ensino à Distância (EAD)
+                        </button>
+                        <button type="button" class="btn modality-btn" data-modality="PRESENCIAL">
+                            <i class="fas fa-chalkboard-teacher me-2"></i>Ensino Presencial
+                        </button>
+                    </div>
+                </div>
                 
                 <form id="quickCalcForm">
-                    <div class="row g-4">
-                        <div class="col-md-4">
+                    <div class="row g-4" id="inputFields">
+                        <!-- EAD fields -->
+                        <div class="col-md-4 ead-field">
                             <div class="form-group">
-                                <label for="prova" class="form-label">
+                                <label for="np1" class="form-label">
                                     <i class="fas fa-file-alt me-2"></i>Nota da Prova
                                 </label>
-                                <input type="number" class="form-control" id="prova" step="0.1" min="0" max="10" required>
+                                <input type="number" class="form-control" id="np1" step="0.1" min="0" max="10" required>
                                 <small class="text-light">Peso: 70%</small>
                             </div>
                         </div>
+                        
+                        <!-- PRESENCIAL fields -->
+                        <div class="col-md-3 presencial-field" style="display: none;">
+                            <div class="form-group">
+                                <label for="np1" class="form-label">
+                                    <i class="fas fa-file-alt me-2"></i>Nota NP1
+                                </label>
+                                <input type="number" class="form-control" id="np1" step="0.1" min="0" max="10" required>
+                                <small class="text-light">Primeira prova</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3 presencial-field" style="display: none;">
+                            <div class="form-group">
+                                <label for="np2" class="form-label">
+                                    <i class="fas fa-file-alt me-2"></i>Nota NP2
+                                </label>
+                                <input type="number" class="form-control" id="np2" step="0.1" min="0" max="10" required>
+                                <small class="text-light">Segunda prova</small>
+                            </div>
+                        </div>
+                        
+                        <!-- Common fields -->
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="pim" class="form-label">
                                     <i class="fas fa-project-diagram me-2"></i>Nota do PIM
                                 </label>
                                 <input type="number" class="form-control" id="pim" step="0.1" min="0" max="10" required>
-                                <small class="text-light">Peso: 20%</small>
+                                <small class="text-light">Peso: <span id="pimWeight">20%</span></small>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 ead-field">
                             <div class="form-group">
                                 <label for="ava" class="form-label">
                                     <i class="fas fa-tasks me-2"></i>Nota do AVA
                                 </label>
                                 <input type="number" class="form-control" id="ava" step="0.1" min="0" max="10" required>
-                                <small class="text-light">Peso: 10%</small>
+                                <small class="text-light">Peso: <span id="avaWeight">10%</span></small>
                             </div>
                         </div>
                     </div>
@@ -153,6 +207,11 @@
         const situacaoEl = document.getElementById('situacao');
         const mensagemEl = document.getElementById('mensagem');
         const funFactEl = document.getElementById('funFact');
+        const modalityBtns = document.querySelectorAll('.modality-btn');
+        const pimWeightEl = document.getElementById('pimWeight');
+        const avaWeightEl = document.getElementById('avaWeight');
+
+        let currentModality = 'EAD';
         
         const funFacts = [
             "Sabia que estudar por períodos curtos de 25 minutos é mais eficiente?",
@@ -160,16 +219,55 @@
             "Dormir bem antes da prova é mais importante que estudar a noite toda!",
             "Fazer exercícios físicos ajuda a melhorar a memória e o aprendizado!"
         ];
+
+        modalityBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                modalityBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentModality = this.getAttribute('data-modality');
+                updateWeights();
+            });
+        });
+
+        function updateWeights() {
+            const eadFields = document.querySelectorAll('.ead-field');
+            const presencialFields = document.querySelectorAll('.presencial-field');
+            
+            if (currentModality === 'EAD') {
+                eadFields.forEach(field => field.style.display = 'block');
+                presencialFields.forEach(field => field.style.display = 'none');
+                pimWeightEl.textContent = '20%';
+                avaWeightEl.textContent = '10%';
+            } else {
+                eadFields.forEach(field => field.style.display = 'none');
+                presencialFields.forEach(field => field.style.display = 'block');
+                pimWeightEl.textContent = '20%';
+                pimWeightEl.textContent = '20%';
+            }
+        }
+        
+        // Call updateWeights initially to set correct visibility
+        updateWeights();
         
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const prova = parseFloat(document.getElementById('prova').value);
             const pim = parseFloat(document.getElementById('pim').value);
-            const ava = parseFloat(document.getElementById('ava').value);
+            let media;
             
-            // Cálculo da média ponderada
-            const media = (prova * 0.7 + pim * 0.2 + ava * 0.1).toFixed(1);
+            if (currentModality === 'EAD') {
+                const notaProva = parseFloat(document.getElementById('np1').value);
+                const ava = parseFloat(document.getElementById('ava').value);
+                // Fórmula EAD: (7 × Nota da Prova + 2 × PIM + 1 × AVA) ÷ 10
+                media = ((7 * notaProva) + (2 * pim) + (1 * ava)) / 10;
+            } else {
+                const np1 = parseFloat(document.getElementById('np1').value);
+                const np2 = parseFloat(document.getElementById('np2').value);
+                // Fórmula Presencial: ((NP1 + NP2) × 0.8 + PIM × 0.2) ÷ 2
+                media = (((np1 + np2) * 0.8) + (pim * 0.2)) / 2;
+            }
+            
+            media = media.toFixed(1);
             
             // Definir situação
             let situacao, classe, mensagem;
@@ -192,7 +290,8 @@
             // Exibir resultados
             mediaFinalEl.textContent = media;
             situacaoEl.textContent = situacao;
-            situacaoEl.className = classe;
+            situacaoEl.className = ''; // Limpa classes anteriores
+            situacaoEl.classList.add(classe); // Adiciona a nova classe
             mensagemEl.textContent = mensagem;
             
             // Exibir fato aleatório

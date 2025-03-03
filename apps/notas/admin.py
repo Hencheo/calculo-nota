@@ -3,7 +3,7 @@ from .models import Disciplina
 
 @admin.register(Disciplina)
 class DisciplinaAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'usuario', 'nota_prova', 'nota_pim', 'nota_ava', 'nota_exame', 'get_media', 'get_situacao')
+    list_display = ('nome', 'usuario', 'nota_prova1', 'nota_pim', 'nota_ava', 'nota_exame', 'get_media', 'get_situacao')
     list_filter = ('usuario',)
     search_fields = ('nome', 'usuario__username')
     

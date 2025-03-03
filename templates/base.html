@@ -26,24 +26,30 @@
                 <!-- Remova este link de logout que está fora do lugar -->
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <!-- Remover esta linha: -->
-                        <!-- <li><a class="dropdown-item" href="{% url 'logout' %}">Sair</a></li> -->
+                        <a class="nav-link" href="{% url 'home' %}">
+                            <i class="fas fa-home me-1"></i>Início
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'como_funciona' %}">
                             <i class="fas fa-info-circle me-1"></i>Como Funciona
                         </a>
                     </li>
-                    <!-- Resto do código permanece igual -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'blog' %}">
-                            <i class="fas fa-blog me-1"></i>Blog
-                        </a>
-                    </li>
-                    
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'calculo_rapido' %}">
                             <i class="fas fa-bolt me-1"></i>Cálculo Rápido
                         </a>
                     </li>
+                    {% if modalidade %}
+                    <li class="nav-item">
+                        <span class="nav-link">
+                            <i class="fas fa-graduation-cap me-1"></i>Modalidade: 
+                            <span class="badge bg-light text-primary">
+                                {% if modalidade == 'EAD' %}Ensino à Distância{% else %}Ensino Presencial{% endif %}
+                            </span>
+                        </span>
+                    </li>
+                    {% endif %}
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     {% if user.is_authenticated %}

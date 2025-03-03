@@ -4,10 +4,16 @@ from django.contrib.auth.models import User
 
 class RegistroUsuarioForm(UserCreationForm):
     email = forms.EmailField(required=True)
+    modalidade = forms.ChoiceField(
+        choices=[('EAD', 'Ensino à Distância'), ('PRESENCIAL', 'Ensino Presencial')],
+        label='Modalidade de Ensino',
+        required=True,
+        widget=forms.RadioSelect
+    )
     
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['username', 'email', 'password1', 'password2', 'modalidade']
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -20,6 +26,9 @@ class RegistroUsuarioForm(UserCreationForm):
         user.email = self.cleaned_data['email']
         if commit:
             user.save()
+            # Criar ou atualizar o perfil do usuário com a modalidade escolhida
+            user.perfil.modalidade = self.cleaned_data['modalidade']
+            user.perfil.save()
         return user
 
 class LoginForm(AuthenticationForm):

@@ -15,20 +15,36 @@ def calcular_notas(request):
     Renderiza a página de cálculo de notas
     """
     return render(request, 'usuarios/calculo.html')
-
-# ... existing imports ...
+def calcular_notas(request):
+    """
+    Renderiza a página de cálculo de notas
+    Se o usuário estiver autenticado, usa a modalidade do perfil
+    Caso contrário, permite escolher a modalidade
+    """
+    context = {}
+    
+    # Verifica se o usuário está autenticado e tem um perfil com modalidade
+    if request.user.is_authenticated and hasattr(request.user, 'perfil'):
+        context['modalidade'] = request.user.perfil.modalidade
+        context['mostrar_escolha_modalidade'] = False  # Não mostra a escolha para usuários autenticados
+    else:
+        # Para usuários não autenticados, permitir escolher a modalidade
+        context['mostrar_escolha_modalidade'] = True
+        
+        # Se a modalidade foi enviada via GET
+        if 'modalidade' in request.GET:
+            context['modalidade'] = request.GET.get('modalidade')
+        else:
+            # Define EAD como padrão se nenhuma modalidade foi especificada
+            context['modalidade'] = 'EAD'
+    
+    return render(request, 'usuarios/calculo.html', context)
 
 def calculo_rapido(request):
     """
     Renderiza a página de cálculo rápido de notas
     """
     return render(request, 'usuarios/calculo_rapido.html')
-# Remover a definição duplicada de calcular_notas
-def calcular_notas(request):
-    """
-    Renderiza a página de cálculo de notas
-    """
-    return render(request, 'usuarios/calcular_notas.html')
 
 def home(request):
     """

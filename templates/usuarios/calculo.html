@@ -64,30 +64,73 @@
             
             <div class="formula-box text-center">
                 <p class="mb-1"><strong>Fórmula de cálculo:</strong></p>
-                <p class="formula mb-2">Média = [(7 × Prova) + (2 × PIM) + (1 × AVA)] ÷ 10</p>
+                {% if modalidade == 'EAD' %}
+                <p class="formula mb-2">Média = [(7 × Nota da Prova) + (2 × PIM) + (1 × AVA)] ÷ 10</p>
+                {% else %}
+                <p class="formula mb-2">Média = [((NP1 + NP2) × 0.8) + (PIM × 0.2)] ÷ 2</p>
+                {% endif %}
                 <p class="mb-0 small">Se média ≥ 7,0: <span class="text-success">Aprovado</span> | Se média < 7,0: Exame Final</p>
                 <p class="mb-0 small">Média Final = (Média + Nota do Exame) ÷ 2</p>
                 <p class="mb-0 small">Se Média Final ≥ 5,0: <span class="text-success">Aprovado</span> | Se Média Final < 5,0: <span class="text-danger">Reprovado</span></p>
             </div>
             
+            {% if mostrar_escolha_modalidade %}
+            <div class="alert alert-info mb-4">
+                <h5 class="alert-heading"><i class="fas fa-info-circle me-2"></i>Escolha sua modalidade de ensino</h5>
+                <p>Selecione a modalidade de ensino para calcular suas notas corretamente:</p>
+                <div class="d-flex justify-content-center mt-3">
+                    <div class="btn-group" role="group">
+                        <a href="?modalidade=EAD" class="btn btn-outline-primary {% if modalidade == 'EAD' %}active{% endif %}">
+                            <i class="fas fa-laptop me-2"></i>Ensino à Distância (EAD)
+                        </a>
+                        <a href="?modalidade=PRESENCIAL" class="btn btn-outline-primary {% if modalidade == 'PRESENCIAL' %}active{% endif %}">
+                            <i class="fas fa-chalkboard-teacher me-2"></i>Ensino Presencial
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if modalidade %}
+            <div class="alert alert-success mb-4">
+                <i class="fas fa-check-circle me-2"></i>
+                Calculando para modalidade: <strong>{% if modalidade == 'EAD' %}Ensino à Distância{% else %}Ensino Presencial{% endif %}</strong>
+            </div>
+            {% endif %}
+            
             <div class="form-container">
                 <form id="calculoForm">
-                    <div class="row mb-4">
+                    <div class="row mb-4" id="notasInputs">
+                        {% if modalidade == 'EAD' %}
                         <div class="col-md-4 mb-3">
                             <label for="nota_prova" class="form-label">Nota da Prova (0-10)</label>
                             <input type="number" class="form-control" id="nota_prova" min="0" max="10" step="0.1" required>
                             <div class="form-text">Peso: 70%</div>
                         </div>
+                        {% else %}
+                        <div class="col-md-4 mb-3">
+                            <label for="nota_prova1" class="form-label">Nota da Prova 1 (0-10)</label>
+                            <input type="number" class="form-control" id="nota_prova1" min="0" max="10" step="0.1" required>
+                            <div class="form-text">Peso: 35%</div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="nota_prova2" class="form-label">Nota da Prova 2 (0-10)</label>
+                            <input type="number" class="form-control" id="nota_prova2" min="0" max="10" step="0.1" required>
+                            <div class="form-text">Peso: 35%</div>
+                        </div>
+                        {% endif %}
                         <div class="col-md-4 mb-3">
                             <label for="nota_pim" class="form-label">Nota do PIM (0-10)</label>
                             <input type="number" class="form-control" id="nota_pim" min="0" max="10" step="0.1" required>
-                            <div class="form-text">Peso: 20%</div>
+                            <div class="form-text">Peso: {% if modalidade == 'EAD' %}20%{% else %}20%{% endif %}</div>
                         </div>
+                        {% if modalidade == 'EAD' %}
                         <div class="col-md-4 mb-3">
                             <label for="nota_ava" class="form-label">Nota AVA (0-10)</label>
                             <input type="number" class="form-control" id="nota_ava" min="0" max="10" step="0.1" required>
                             <div class="form-text">Peso: 10%</div>
                         </div>
+                        {% endif %}
                     </div>
                     
                     <div class="mb-4" id="exameContainer" style="display: none;">
@@ -182,15 +225,24 @@
             e.preventDefault();
             
             // Obter valores do formulário
+            {% if modalidade == 'EAD' %}
             const notaProva = parseFloat(document.getElementById('nota_prova').value);
             const notaPim = parseFloat(document.getElementById('nota_pim').value);
             const notaAva = parseFloat(document.getElementById('nota_ava').value);
+            
+            // Calcular média ponderada EAD: (7*Prova + 2*PIM + 1*AVA) / 10
+            const media = ((7 * notaProva) + (2 * notaPim) + (1 * notaAva)) / 10;
+            {% else %}
+            const notaProva1 = parseFloat(document.getElementById('nota_prova1').value);
+            const notaProva2 = parseFloat(document.getElementById('nota_prova2').value);
+            const notaPim = parseFloat(document.getElementById('nota_pim').value);
+            
+            // Calcular média ponderada Presencial: ((NP1 + NP2) * 0.8 + PIM * 0.2) / 2
+            const media = (((notaProva1 + notaProva2) * 0.8 + notaPim * 0.2) / 2);
+            {% endif %}
             const notaExameInput = document.getElementById('nota_exame');
             const temExame = notaExameInput.value !== '';
             const notaExame = temExame ? parseFloat(notaExameInput.value) : 0;
-            
-            // Calcular média ponderada: (7*Prova + 2*PIM + 1*AVA) / 10
-            const media = ((7 * notaProva) + (2 * notaPim) + (1 * notaAva)) / 10;
             
             // Determinar situação
             let situacaoText = '';

@@ -11,16 +11,42 @@
             <h3 class="mb-0">Fórmula de Cálculo</h3>
         </div>
         <div class="card-body">
-            <p class="lead">A média semestral é calculada usando a seguinte fórmula:</p>
-            <div class="alert alert-info">
-                <strong>Média = ((7 × Nota da Prova) + (2 × Nota do PIM) + (1 × Nota dos Questionários AVA)) ÷ 10</strong>
+            <p class="lead">A média semestral é calculada de acordo com sua modalidade de ensino:</p>
+            
+            <div class="card mb-3">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0">Ensino à Distância (EAD)</h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <strong>Média = ((7 × Nota da Prova) + (2 × Nota do PIM) + (1 × Nota dos Questionários AVA)) ÷ 10</strong>
+                    </div>
+                    <p>Esta fórmula atribui pesos diferentes para cada componente da avaliação:</p>
+                    <ul>
+                        <li>Prova: 70% da nota final</li>
+                        <li>PIM (Projeto Integrado Multidisciplinar): 20% da nota final</li>
+                        <li>Questionários AVA (Ambiente Virtual de Aprendizagem): 10% da nota final</li>
+                    </ul>
+                </div>
             </div>
-            <p>Esta fórmula atribui pesos diferentes para cada componente da avaliação:</p>
-            <ul>
-                <li>Prova: 70% da nota final</li>
-                <li>PIM (Projeto Integrado Multidisciplinar): 20% da nota final</li>
-                <li>Questionários AVA (Ambiente Virtual de Aprendizagem): 10% da nota final</li>
-            </ul>
+
+            <div class="card mb-3">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0">Ensino Presencial</h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <strong>Média = ((Média das Provas × 0.8) + (Nota do PIM × 0.2))</strong>
+                        <br>
+                        <small>Onde: Média das Provas = (Prova 1 + Prova 2) ÷ 2</small>
+                    </div>
+                    <p>Esta fórmula atribui pesos diferentes para cada componente da avaliação:</p>
+                    <ul>
+                        <li>Média das Provas (Prova 1 e Prova 2): 80% da nota final</li>
+                        <li>PIM (Projeto Integrado Multidisciplinar): 20% da nota final</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
     

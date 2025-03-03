@@ -27,7 +27,7 @@ def adicionar_disciplina(request):
             messages.success(request, 'Disciplina adicionada com sucesso!')
             return redirect('dashboard')
     else:
-        form = DisciplinaForm()
+        form = DisciplinaForm(initial={'usuario': request.user})
     return render(request, 'notas/form_disciplina.html', {'form': form, 'titulo': 'Adicionar Disciplina'})
 
 @login_required
