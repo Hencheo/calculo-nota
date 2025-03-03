@@ -17,7 +17,7 @@ ALLOWED_HOSTS = ['calculo-nota.onrender.com', 'localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'django.contrib.auth',
+    'django.contrib.auth',  # Necessário
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -31,9 +31,9 @@ INSTALLED_APPS = [
 # Adicionar Debug Toolbar apenas em ambiente de desenvolvimento
 if DEBUG:
     INSTALLED_APPS.append('debug_toolbar')
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -109,4 +109,4 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 # Configurações de autenticação
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = 'dashboard'
-LOGOUT_REDIRECT_URL = 'home'  # Certifique-se de que isso está definido corretamente
+LOGOUT_REDIRECT_URL = 'home'  # Isso é importante para o redirecionamento após logout

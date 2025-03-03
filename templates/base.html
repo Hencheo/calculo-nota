@@ -23,13 +23,16 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Remova este link de logout que está fora do lugar -->
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <!-- Procure por algo como: -->
+                        <!-- Remover esta linha: -->
+                        <!-- <li><a class="dropdown-item" href="{% url 'logout' %}">Sair</a></li> -->
                         <a class="nav-link" href="{% url 'como_funciona' %}">
                             <i class="fas fa-info-circle me-1"></i>Como Funciona
                         </a>
                     </li>
+                    <!-- Resto do código permanece igual -->
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'blog' %}">
                             <i class="fas fa-blog me-1"></i>Blog
@@ -54,6 +57,7 @@
                                 <i class="fas fa-user me-1"></i>{{ user.first_name|default:user.username }}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
+                                <!-- Certifique-se de que o link de logout esteja assim -->
                                 <li><a class="dropdown-item" href="{% url 'logout' %}">Sair</a></li>
                             </ul>
                         </li>
