@@ -7,10 +7,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('apps.usuarios.urls')),
     path('notas/', include('apps.notas.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),  # Adicione esta linha
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     
     # Add Debug Toolbar URLs if it's installed
