@@ -6,7 +6,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('registro/', views.registro, name='registro'),
     path('login/', views.LoginUsuarioView.as_view(), name='login'),
-    # Usando LogoutView com next_page explícito para garantir redirecionamento para home
+    path('calculo-rapido/', views.calculo_rapido, name='calculo_rapido'),
     path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
     path('calcular-notas/', views.calcular_notas, name='calcular_notas'),
     path('dashboard/', views.dashboard, name='dashboard'),

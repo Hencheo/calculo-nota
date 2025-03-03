@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Cálculo Rápido - Sistema de Cálculo de Notas{% endblock %}
+
+{% block extra_css %}
+<style>
+    .calculator-container {
+        background: linear-gradient(135deg, #6c5ce7, #a363d9);
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        color: white;
+    }
+    
+    .form-control {
+        border-radius: 10px;
+        border: 2px solid #fff;
+        background: rgba(255,255,255,0.9);
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+        transform: scale(1.02);
+        box-shadow: 0 0 15px rgba(255,255,255,0.3);
+    }
+    
+    .result-box {
+        background: rgba(255,255,255,0.1);
+        border-radius: 10px;
+        padding: 1.5rem;
+        margin-top: 2rem;
+        backdrop-filter: blur(5px);
+    }
+    
+    .status-approved {
+        color: #2ecc71;
+        font-weight: bold;
+    }
+    
+    .status-exam {
+        color: #f1c40f;
+        font-weight: bold;
+    }
+    
+    .status-failed {
+        color: #e74c3c;
+        font-weight: bold;
+    }
+    
+    .fun-fact {
+        font-style: italic;
+        font-size: 0.9rem;
+        margin-top: 1rem;
+        color: rgba(255,255,255,0.8);
+    }
+    
+    .calculate-btn {
+        background: #fff;
+        color: #6c5ce7;
+        font-weight: bold;
+        padding: 0.8rem 2rem;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+    }
+    
+    .calculate-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        background: #f8f9fa;
+        color: #5648c7;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="calculator-container">
+                <h2 class="text-center mb-4">
+                    <i class="fas fa-calculator me-2"></i>Cálculo Rápido de Notas
+                </h2>
+                <p class="text-center mb-4">
+                    Calcule sua média instantaneamente! Não precisa de cadastro 🚀
+                </p>
+                
+                <form id="quickCalcForm">
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="prova" class="form-label">
+                                    <i class="fas fa-file-alt me-2"></i>Nota da Prova
+                                </label>
+                                <input type="number" class="form-control" id="prova" step="0.1" min="0" max="10" required>
+                                <small class="text-light">Peso: 70%</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="pim" class="form-label">
+                                    <i class="fas fa-project-diagram me-2"></i>Nota do PIM
+                                </label>
+                                <input type="number" class="form-control" id="pim" step="0.1" min="0" max="10" required>
+                                <small class="text-light">Peso: 20%</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="ava" class="form-label">
+                                    <i class="fas fa-tasks me-2"></i>Nota do AVA
+                                </label>
+                                <input type="number" class="form-control" id="ava" step="0.1" min="0" max="10" required>
+                                <small class="text-light">Peso: 10%</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <button type="submit" class="calculate-btn btn btn-lg">
+                            <i class="fas fa-magic me-2"></i>Calcular Média
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="result-box" id="resultBox" style="display: none;">
+                    <h4 class="text-center mb-3">Resultado</h4>
+                    <div class="row text-center">
+                        <div class="col-md-6">
+                            <h5>Média Final</h5>
+                            <h2 id="mediaFinal">-</h2>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Situação</h5>
+                            <h2 id="situacao">-</h2>
+                        </div>
+                    </div>
+                    <p class="text-center mt-3" id="mensagem"></p>
+                    <div class="fun-fact text-center" id="funFact"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('quickCalcForm');
+        const resultBox = document.getElementById('resultBox');
+        const mediaFinalEl = document.getElementById('mediaFinal');
+        const situacaoEl = document.getElementById('situacao');
+        const mensagemEl = document.getElementById('mensagem');
+        const funFactEl = document.getElementById('funFact');
+        
+        const funFacts = [
+            "Sabia que estudar por períodos curtos de 25 minutos é mais eficiente?",
+            "Explicar o conteúdo para alguém ajuda a fixar 90% do aprendizado!",
+            "Dormir bem antes da prova é mais importante que estudar a noite toda!",
+            "Fazer exercícios físicos ajuda a melhorar a memória e o aprendizado!"
+        ];
+        
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const prova = parseFloat(document.getElementById('prova').value);
+            const pim = parseFloat(document.getElementById('pim').value);
+            const ava = parseFloat(document.getElementById('ava').value);
+            
+            // Cálculo da média ponderada
+            const media = (prova * 0.7 + pim * 0.2 + ava * 0.1).toFixed(1);
+            
+            // Definir situação
+            let situacao, classe, mensagem;
+            
+            if (media >= 7.0) {
+                situacao = "APROVADO";
+                classe = "status-approved";
+                mensagem = "Parabéns! Você foi aprovado direto! 🎉";
+            } else if (media >= 3.0) {
+                situacao = "EXAME";
+                classe = "status-exam";
+                const notaNecessaria = (10 - media).toFixed(1);
+                mensagem = `Você precisa fazer o exame. Para ser aprovado, precisa tirar ${notaNecessaria} no exame final. 📚`;
+            } else {
+                situacao = "REPROVADO";
+                classe = "status-failed";
+                mensagem = "Infelizmente você foi reprovado. Não desanime, tente novamente! 💪";
+            }
+            
+            // Exibir resultados
+            mediaFinalEl.textContent = media;
+            situacaoEl.textContent = situacao;
+            situacaoEl.className = classe;
+            mensagemEl.textContent = mensagem;
+            
+            // Exibir fato aleatório
+            const randomFact = funFacts[Math.floor(Math.random() * funFacts.length)];
+            funFactEl.textContent = "💡 " + randomFact;
+            
+            resultBox.style.display = 'block';
+            resultBox.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+</script>
+{% endblock %}

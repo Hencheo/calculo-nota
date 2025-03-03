@@ -16,6 +16,13 @@ def calcular_notas(request):
     """
     return render(request, 'usuarios/calculo.html')
 
+# ... existing imports ...
+
+def calculo_rapido(request):
+    """
+    Renderiza a página de cálculo rápido de notas
+    """
+    return render(request, 'usuarios/calculo_rapido.html')
 # Remover a definição duplicada de calcular_notas
 def calcular_notas(request):
     """
