@@ -5,19 +5,101 @@
 
 {% block extra_css %}
 <style>
+    body {
+        background-image: url('/static/images/piclumen-1741044030251.png');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        min-height: 100vh;
+        position: relative;
+    }
+
+    .container {
+        position: relative;
+        z-index: 1;
+    }
+    @media (max-width: 320px) {
+        .calculator-container {
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 15px;
+        }
+
+        .calculator-container h2 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        .form-label {
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+        .form-control {
+            font-size: 0.9rem;
+            padding: 0.4rem 0.75rem;
+            height: auto;
+        }
+        .btn {
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+        }
+        .result-text {
+            font-size: 1rem;
+        }
+        .fas {
+            font-size: 0.9rem;
+        }
+        
+        /* Estilos para os botões de modalidade em telas pequenas */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .modality-btn {
+            font-size: 0.8rem;
+            padding: 0.4rem 0.6rem;
+        }
+    }
     .calculator-container {
-        background: linear-gradient(135deg, #0d6efd, #0a58ca);
-        border-radius: 15px;
-        padding: 2rem;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        color: white;
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(15px);
+        border-radius: 25px;
+        padding: 2.5rem;
+        box-shadow: 0 0 80px rgba(0, 195, 255, 0.4), 0 0 150px rgba(16, 3, 194, 0.3);
+        color: #ffffff;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        margin: 2rem auto;
+    }
+
+    .calculator-container::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle at center, rgba(138, 43, 226, 0.25) 0%, rgba(13, 110, 253, 0.15) 60%);
+        animation: pulse 15s infinite;
+        z-index: -1;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); opacity: 0.5; }
+        50% { transform: scale(1.5); opacity: 0.2; }
+        100% { transform: scale(1); opacity: 0.5; }
     }
     
     .form-control {
-        border-radius: 10px;
-        border: 2px solid #fff;
-        background: rgba(255,255,255,0.9);
+        border-radius: 12px;
+        border: 2px solid rgba(255,255,255,0.2);
+        background: #ffffff;
         transition: all 0.3s ease;
+        padding: 0.8rem 1.2rem;
+        font-size: 1.1rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
     
     .form-control:focus {
@@ -26,33 +108,54 @@
     }
     
     .result-box {
-        background: rgba(255,255,255,0.1);
-        border-radius: 10px;
-        padding: 1.5rem;
-        margin-top: 2rem;
-        backdrop-filter: blur(5px);
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 15px;
+        padding: 2rem;
+        margin-top: 2.5rem;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.3);
+        box-shadow: 0 10px 30px rgba(0, 195, 255, 0.2), 0 0 80px rgba(16, 3, 194, 0.1);
+        transform: translateY(0);
+        transition: all 0.4s ease;
+        color: #ffffff;
+    }
+
+    .result-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0, 195, 255, 0.3), 0 0 100px rgba(16, 3, 194, 0.2);
+        background: rgba(255, 255, 255, 0.2);
     }
     
     .status-approved {
         color: #2ecc71;
         font-weight: bold;
+        text-shadow: 0 0 10px rgba(46, 204, 113, 0.7);
+        font-size: 1.8rem;
     }
     
     .status-exam {
         color: #f1c40f;
         font-weight: bold;
+        text-shadow: 0 0 10px rgba(241, 196, 15, 0.7);
+        font-size: 1.8rem;
     }
     
     .status-failed {
         color: #e74c3c;
         font-weight: bold;
+        text-shadow: 0 0 10px rgba(231, 76, 60, 0.7);
+        font-size: 1.8rem;
     }
     
     .fun-fact {
         font-style: italic;
         font-size: 0.9rem;
-        margin-top: 1rem;
-        color: rgba(255,255,255,0.8);
+        margin-top: 1.5rem;
+        color: rgba(255, 255, 255, 0.8);
+        background: rgba(255, 255, 255, 0.1);
+        padding: 1rem;
+        border-radius: 10px;
+        border-left: 3px solid rgba(13, 110, 253, 0.5);
     }
     
     .calculate-btn {
@@ -273,22 +376,33 @@
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             
+            // Validate all required fields are filled
+            const requiredFields = form.querySelectorAll('input[required]');
+            let allFieldsFilled = true;
+            requiredFields.forEach(field => {
+                if (!field.value) {
+                    allFieldsFilled = false;
+                }
+            });
+            
+            if (!allFieldsFilled) {
+                return;
+            }
+            
             const pim = parseFloat(document.getElementById('pim').value);
             let media;
             
             if (currentModality === 'EAD') {
                 const notaProva = parseFloat(document.getElementById('nota_prova').value);
                 const ava = parseFloat(document.getElementById('ava').value);
-                // Fórmula EAD: (7 × Nota da Prova + 2 × PIM + 1 × AVA) ÷ 10
                 media = ((7 * notaProva) + (2 * pim) + (1 * ava)) / 10;
             } else {
                 const np1 = parseFloat(document.getElementById('nota_np1').value);
                 const np2 = parseFloat(document.getElementById('nota_np2').value);
-                // Fórmula Presencial: ((NP1 + NP2) × 0.8 + PIM × 0.2) ÷ 2
                 media = (((np1 + np2) * 0.8) + (pim * 0.2)) / 2;
             }
             
-            media = media.toFixed(1);
+            media = parseFloat(media.toFixed(1));
             
             // Definir situação
             let situacao, classe, mensagem;
@@ -310,7 +424,7 @@
             
             // Exibir resultados
             mediaFinalEl.textContent = media;
-            situacaoEl.textContent = situacao;
+            situacaoEl.innerHTML = situacao;
             situacaoEl.className = ''; // Limpa classes anteriores
             situacaoEl.classList.add(classe); // Adiciona a nova classe
             mensagemEl.textContent = mensagem;
@@ -319,8 +433,23 @@
             const randomFact = funFacts[Math.floor(Math.random() * funFacts.length)];
             funFactEl.textContent = "💡 " + randomFact;
             
+            // Garantir que o resultado seja exibido
             resultBox.style.display = 'block';
-            resultBox.scrollIntoView({ behavior: 'smooth' });
+            resultBox.style.opacity = '0';
+            
+            // Adicionar efeito de fade-in para o resultado
+            setTimeout(() => {
+                resultBox.style.opacity = '1';
+                resultBox.style.transition = 'opacity 0.5s ease-in-out';
+            }, 50);
+            
+            // Usar setTimeout para garantir que o DOM seja atualizado antes de rolar
+            setTimeout(() => {
+                // Rolar suavemente até o resultado sem mover o formulário para cima
+                resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+            
+            return false; // Impedir qualquer comportamento padrão adicional
         });
     });
 </script>

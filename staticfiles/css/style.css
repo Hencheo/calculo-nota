@@ -19,6 +19,21 @@ body {
     font-family: 'Poppins', sans-serif !important;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background: linear-gradient(135deg, #f0f2f5 0%, #e3e8ef 100%);
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Removing the SVG pattern background with opacity */
+    /* background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CiAgPHBhdGggZD0iTTAgMGg2MHY2MEgweiIgZmlsbD0ibm9uZSIvPgogIDxwYXRoIGQ9Ik0zMCAzMG0tMiAwYTIgMiAwIDEgMCA0IDBhMiAyIDAwIDEgMCAtNCAwIiBmaWxsPSJyZ2JhKDAsIDAsIDAsIDAuMDIpIi8+Cjwvc3ZnPg=='); */
+    /* opacity: 0.5; */
+    z-index: -1;
 }
 
 /* Estilos personalizados */
@@ -48,6 +63,22 @@ body {
     display: flex;
     flex-direction: column;
     background-color: var(--light-bg);
+    min-height: 100vh;
+    margin: 0;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+footer {
+    flex-shrink: 0;
+    background: var(--dark-gradient);
+    color: white;
+    padding: 4rem 0 2rem;
+    border-radius: 100px 0 0 0;
+    position: relative;
+    z-index: 1;
 }
 
 /* Estilo para o header/navbar */
@@ -70,6 +101,24 @@ body {
     padding: 0.8rem 2rem;
     font-weight: 600;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(13, 110, 253, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: 0.5s;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
 }
 
 .btn-primary:hover {
@@ -81,10 +130,12 @@ body {
 .card {
     border: none;
     border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
     transition: all 0.3s ease;
     overflow: hidden;
     margin-bottom: 1.5rem;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
 }
 
 .card:hover {
@@ -92,14 +143,10 @@ body {
     box-shadow: 0 15px 30px rgba(0,0,0,0.15);
 }
 
-.container.mt-4 {
-    flex: 1;
-}
-
 /* Footer moderno */
 footer {
     background: var(--dark-gradient);
-    color: white;
+    color: #ffffff;
     padding: 4rem 0 2rem;
     margin-top: auto;
     border-radius: 100px 0 0 0;
@@ -107,29 +154,31 @@ footer {
 
 /* Estilos do Footer */
 footer .social-links a {
-    transition: opacity 0.3s ease;
+    transition: transform 0.3s ease;
 }
 
 footer .social-links a:hover {
-    opacity: 0.8;
+    transform: scale(1.1);
 }
 
 footer .list-unstyled a {
     transition: color 0.3s ease;
+    color: #ffffff;
 }
 
 footer .list-unstyled a:hover {
-    color: rgba(255, 255, 255, 0.8) !important;
+    color: #e0e0e0 !important;
 }
 
 footer .btn-outline-light:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: #ffffff;
+    color: var(--primary-color);
 }
 
 /* Seções principais */
 .hero-section {
     background: var(--dark-gradient);
-    color: white;
+    color: #ffffff;
     border-radius: 0 0 0 100px;
     padding: 5rem 0;
     margin-bottom: 3rem;

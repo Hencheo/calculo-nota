@@ -15,6 +15,11 @@
     white-space: nowrap;
 }
 
+/* Estilo para o título "Sobre o Projeto" */
+footer .col-md-4:first-child h5 {
+    text-align: left;
+}
+
 /* Ajuste para dimensões específicas */
 @media (max-width: 400px) {
     .contact-info {
@@ -33,6 +38,8 @@
     }
     
     footer h5 {
+        padding-left: 0;
+        text-align: center !important;
         margin-bottom: 1rem;
     }
     
@@ -52,7 +59,12 @@
         text-align: left !important;
     }
     
-    footer .col-md-4 h5,
+    /* Manter o título "Sobre o Projeto" centralizado mesmo em dispositivos móveis */
+    footer .col-md-4 h5 {
+        text-align: center !important;
+    }
+    
+    footer .col-md-4 h5:not(:first-of-type),
     footer .col-md-4 p,
     footer .col-md-4 ul,
     footer .col-md-4 li,

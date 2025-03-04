@@ -4,23 +4,136 @@
 
 {% block title %}{{ titulo }} - Sistema de Cálculo de Notas{% endblock %}
 
+{% block extra_css %}
+<style>
+    body {
+        background-image: url('/static/images/piclumen-1741044030251.png');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        min-height: 100vh;
+        position: relative;
+    }
+    @media (max-width: 320px) {
+        .form-container {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 15px;
+        }
+        
+        .d-flex.justify-content-between {
+            gap: 1rem;
+        }
+        
+        .form-header {
+            padding: 1rem;
+        }
+        
+        .form-header h4 {
+            font-size: 1.1rem;
+        }
+        
+        .form-body {
+            padding: 1rem;
+        }
+        
+        .form-control, .form-select {
+            font-size: 0.9rem;
+            padding: 0.4rem 0.75rem;
+        }
+        
+        label {
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .btn-lg {
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+        }
+        
+        .fas {
+            font-size: 0.9rem;
+        }
+    }
+    .form-container {
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(15px);
+        border-radius: 25px;
+        padding: 2rem;
+        margin: 2rem auto;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 80px rgba(0, 195, 255, 0.4), 0 0 150px rgba(16, 3, 194, 0.3);
+        position: relative;
+        overflow: hidden;
+        color: #ffffff;
+    }
+    
+    .form-container::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle at center, rgba(138, 43, 226, 0.25) 0%, rgba(13, 110, 253, 0.15) 60%);
+        animation: pulse 15s infinite;
+        z-index: -1;
+    }
+    
+    @keyframes pulse {
+        0% { transform: scale(1); opacity: 0.5; }
+        50% { transform: scale(1.5); opacity: 0.2; }
+        100% { transform: scale(1); opacity: 0.5; }
+    }
+    
+    .form-header {
+        background: rgba(13, 110, 253, 0.2);
+        border-radius: 15px 15px 0 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 1.5rem;
+    }
+    
+    .form-body {
+        padding: 2rem;
+    }
+    
+    .form-control, .form-select {
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+    }
+    
+    .form-control:focus, .form-select:focus {
+        background-color: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.3);
+        color: white;
+        box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.1);
+    }
+    
+    label {
+        color: rgba(255, 255, 255, 0.9);
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="container py-5">
+<div class="container py-3">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white">
+        <div class="col-12 col-md-8">
+            <div class="form-container">
+                <div class="form-header">
                     <h4 class="mb-0"><i class="fas fa-book me-2"></i>{{ titulo }}</h4>
                 </div>
-                <div class="card-body p-4">
-                    <form method="post">
+                <div class="form-body">
+                    <form method="post" class="touch-friendly-form">
                         {% csrf_token %}
                         {{ form|crispy }}
                         <div class="d-flex justify-content-between mt-4">
-                            <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary">
+                            <a href="{% url 'dashboard' %}" class="btn btn-outline-light btn-lg">
                                 <i class="fas fa-arrow-left me-2"></i>Voltar
                             </a>
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-light btn-lg">
                                 <i class="fas fa-save me-2"></i>Salvar
                             </button>
                         </div>

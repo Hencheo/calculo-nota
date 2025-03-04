@@ -7,6 +7,7 @@
     /* Ajusta cards para ocupar largura total */
     .card {
         margin-bottom: 1rem;
+        background: #ffffff;
     }
 
     /* Ajusta tamanho dos botões para toque */
@@ -23,13 +24,14 @@
 
     /* Ajusta formulários */
     .form-control {
-        font-size: 16px; /* Previne zoom automático no iOS */
-        height: 45px; /* Altura maior para melhor toque */
+        font-size: 16px;
+        height: 45px;
     }
 
     /* Ajusta navbar para mobile */
     .navbar-brand {
         font-size: 1.2rem;
+        color: #ffffff;
     }
 
     /* Melhora espaçamento do menu mobile */
@@ -40,7 +42,8 @@
     /* Ajusta footer para mobile */
     footer {
         text-align: center;
-        font-size: 0.95rem; /* Tamanho de fonte ligeiramente menor */
+        font-size: 0.95rem;
+        background: var(--dark-gradient);
     }
     
     /* Garantir que as informações de contato sejam visíveis */
@@ -48,22 +51,14 @@
         margin-bottom: 0.75rem;
         display: block;
         width: 100%;
+        color: #ffffff;
     }
     
     /* Aumentar contraste e visibilidade dos ícones no footer */
     footer .fas, footer .fab {
         font-size: 1.1rem;
         margin-right: 8px;
-    }
-
-    /* Ajusta ícones para tamanho de toque */
-    .fas, .fab {
-        font-size: 1.2rem;
-    }
-
-    /* Ajusta cards do dashboard */
-    .dashboard-card {
-        margin-bottom: 1rem;
+        color: #ffffff;
     }
 }
 
